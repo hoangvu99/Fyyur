@@ -11,6 +11,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import logging
 from logging import Formatter, FileHandler
+from flask_wtf.csrf import CSRFProtect
 from flask_wtf import Form
 from forms import *
 from sqlalchemy.sql import func
@@ -26,7 +27,8 @@ app.config.from_object("config")
 db = SQLAlchemy(app)
 migrate = Migrate(app, db, compare_type=True)
 migrate.init_app(app)
-
+app.secret_key = b"_53oi3uriq9pifpff;apl"
+csrf = CSRFProtect(app)
 # TODO: connect to a local postgresql database
 
 
@@ -52,8 +54,9 @@ class Venue(db.Model):
     facebook_link = db.Column(db.String(120))
     genres = db.Column(db.String(500))
     website = db.Column(db.String(500))
-    seeking_description = db.Column(db.Boolean, default=False)
+    seeking_description = db.Column(db.String(500))
     shows_venue = db.relationship("Show", backref="venue")
+    seeking_talent = db.Column(db.Boolean, default=False)
 
 
 class Artist(db.Model):
@@ -70,7 +73,7 @@ class Artist(db.Model):
     website = db.Column(db.String(500))
     seeking_venue = db.Column(db.Boolean, default=False)
     shows_art = db.relationship("Show", backref="artist")
-
+    seeking_description = db.Column(db.String(500))
     # DONE: implement any missing fields, as a database migration using Flask-Migrate
 
 

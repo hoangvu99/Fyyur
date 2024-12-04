@@ -8,6 +8,7 @@ from wtforms import (
     DateTimeField,
     SubmitField,
     BooleanField,
+    TextAreaField,
 )
 from wtforms.validators import DataRequired, AnyOf, URL, ValidationError
 
@@ -125,9 +126,9 @@ class VenueForm(Form):
     address = StringField("address", validators=[DataRequired()])
     phone = StringField("phone", validators=[DataRequired(), check_phone_number])
     image_link = StringField("image_link", validators=[DataRequired(), URL()])
-
     facebook_link = StringField("facebook_link", validators=[URL()])
     website = StringField("website", validators=[URL()])
+    seeking_description = TextAreaField("seeking_description", validators=[])
 
 
 class ArtistForm(Form):
@@ -222,11 +223,11 @@ class ArtistForm(Form):
     name = StringField("name", validators=[])
     seeking_venue = BooleanField("seeking_venue", validators=[])
     city = StringField("city", validators=[DataRequired()])
-
     phone = StringField("phone", validators=[DataRequired(), check_phone_number])
     image_link = StringField("image_link", validators=[DataRequired(), URL()])
     facebook_link = StringField("facebook_link", validators=[URL()])
     website = StringField("website", validators=[URL()])
+    seeking_description = TextAreaField("seeking_description", validators=[])
 
 
 # TODO IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
